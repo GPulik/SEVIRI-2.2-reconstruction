@@ -1,0 +1,16 @@
+numpy
+scipy
+pandas
+xarray
+netCDF4
+pyyaml
+xlrd
+matplotlib
+joblib
+scikit-learn>=1.6
+satpy>=0.60
+pyresample
+pyspectral
+pyorbital
+eccodes
+eumdac

@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the article."
+title: "SEVIRI 2.25 um reconstruction"
+authors:
+  - family-names: Pulik
+    given-names: Guy
+    affiliation: "Institute of Earth Sciences, The Hebrew University of Jerusalem"
+  - family-names: Rosenfeld
+    given-names: Daniel
+    affiliation: "Institute of Earth Sciences, The Hebrew University of Jerusalem"
+repository-code: "https://github.com/GPulik/SEVIRI-2.2-reconstruction"
+license: MIT
+version: 1.0.0
+preferred-citation:
+  type: article
+  title: "Cross-Sensor Machine-Learning Reconstruction of the Missing 2.25 um Reflectance Channel for MSG SEVIRI"
+  authors:
+    - family-names: Pulik
+      given-names: Guy
+    - family-names: Rosenfeld
+      given-names: Daniel
+  journal: "Remote Sensing"
+  year: 2026
