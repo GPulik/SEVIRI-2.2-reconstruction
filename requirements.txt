@@ -13,4 +13,3 @@ pyresample
 pyspectral
 pyorbital
 eccodes
-eumdac

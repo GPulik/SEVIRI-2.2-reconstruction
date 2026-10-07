@@ -1,0 +1,10 @@
+work/
+__pycache__/
+*.pyc
+*.joblib
+*.npz
+*.nat
+*.nc
+*.grb
+*.xls
+.ipynb_checkpoints/

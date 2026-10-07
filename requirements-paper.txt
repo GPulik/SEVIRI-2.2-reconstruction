@@ -1,0 +1,7 @@
+# Library versions cited in the article (see its reference list). Install these to reproduce the published numbers
+# as closely as possible; requirements.txt is the flexible set.
+satpy==0.60.0
+pyresample==1.35.0
+pyspectral==0.14.3
+pyorbital==1.13.0
+scikit-learn==1.6.1

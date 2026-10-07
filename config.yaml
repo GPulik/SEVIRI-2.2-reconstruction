@@ -1,0 +1,52 @@
+# Configuration for SEVIRI 2.25 um reconstruction. Paths are relative to this file unless absolute.
+
+paths:
+  scenes_dir: work/scenes          # one folder per scene: SEVIRI .nat, FCI BODY chunks, clm_grib/
+  masks_dir: work/masks            # <scene>_mask.nc written by prepare.py
+  cache_dir: work/cache            # <scene>.npz pixel caches
+  models_dir: work/models
+  out_dir: work/results
+  mtf_xls: data/MSG-4 SEVIRI_MTF.xls   # pre-launch SEVIRI MTF characterisation (EUMETSAT); not redistributed
+  scene_list: data/scenes.csv
+
+seviri:
+  calib_mode: MEIRINK-2023         # solar channels (VIS006, IR_016); thermal channels always nominal
+  rsr_platform: Meteosat-11        # spectral response used for the 3.9 um solar reflectance (pyspectral)
+  sza_limit_deg: 82.0
+  temp_min_k: 180.0                # 10.8 um brightness temperature is scaled to 0-1 between these bounds
+  temp_max_k: 330.0
+
+psf:
+  mtf_sheet: NIR1.6                # sheet of the MTF workbook; 1.6 um is the spatial-response proxy
+  fci_km_per_px: 1.0
+  scale: 1.0                       # kernel width relative to the pre-launch PSF (shape kept)
+
+training:
+  ocean_keep_fraction: 0.05        # random fraction of clear-sky ocean pixels kept
+  per_scene: 1791272               # equal random subset per training scene (66,277,064 pixels for 37 scenes)
+  seed: 42
+  convention: norm_all             # article: 0.6 and 1.6 um inputs and the target divided by cos(SZA), prediction multiplied
+                                   # by cos(SZA) again (see seviri22/illum.py); "published" = no division (earlier analysis)
+  rf:                              # tuned settings of the article (Section 2.5); the earlier ones were 30 / 22 / 8 / 1.0 / none
+    n_estimators: 30
+    max_depth: 39
+    min_samples_leaf: 36
+    max_features: 0.5
+    max_samples: 0.25
+    random_state: 42
+    tree_batch: 10                 # trees fitted per batch (seed random_state*1000 + batch); memory control
+  gbm:                             # HistGradientBoostingRegressor; unlisted settings are the scikit-learn defaults
+    learning_rate: 0.06
+    max_iter: 400
+    max_depth: null                # unlimited (default)
+    max_leaf_nodes: 63
+    min_samples_leaf: 200
+    l2_regularization: 1.0
+    early_stopping: true           # on a random validation_fraction of the training pixels, not on validation scenes
+    validation_fraction: 0.1       # default
+    n_iter_no_change: 20
+    random_state: 42
+
+validation:
+  rel_window: 3                    # 3 x 3 smoothing for relRMSE, Equation (S5)
+  rel_floor: 0.02
